@@ -1,1 +1,19 @@
-njhcdshn
+O que são sistemas embarcados?
+São sistemas que combinam hardware e software para realizar funções específicas e processar informações.
+
+O que são sistemas microprocesssados?
+São circuitos integrados que realizam funções específicas e são responsáveis por tomadas de decisão.
+
+Apresente aplicações de sistemas embarcados: (a) Para a indústria automotiva; (b) Para eletrodomésticos; (c) Para automação industrial.
+a) Sistema de GPS do carro, Sistema de farol do carro.
+b) Microondas, máquina de lavar, televisão.
+c) Esteiras, robôs montadores.
+
+Cite arquiteturas possíveis e as diferenças entre elas.
+Arquiteturas: 
+Microcontroladores como Arduino Uno e Arduino Yún, são arquiteturas mais focadas no desempenho de uma única funcionalidade.
+Dsps como a Tms320c5515 DSP Evaluation Module: são mais usados para processamento de sinais digitais e análise de dados.
+System-on-chip como a Raspberry Pi: possuem hardware semeslhante ao dos microcontroladores e apresentam uma melhor capacidade de processamento.
+
+Por que usamos o Raspberry Pi na disciplina, ao invés de outro system-on-chip?
+Porque a Raspberry possui uma memória de 1 Gb, câmera, sistema operacional no cartão de memória, clock de 900 MHz entre outras funcionalidades.
