@@ -1,0 +1,17 @@
+1.Defina qual modelo de Raspberry Pi você utilizará no projeto desta disciplina com o Raspberry Pi. Justifique sua escolha.
+Raspberry Pi 3 - É um modelo mais completo e mais recente possui mias pinos e ferramentas disponíveis para uso no 
+projeto, além de capacidade de processamento maior.
+
+2.Defina qual sistema operacional você utilizará no projeto desta disciplina com o Raspberry Pi. Justifique sua escolha.
+Será utilizado o Raspbian, pois grande parte dos softwares e das bibliotecas que o projeto precisará estão disponíveis no 
+sistema, é um sistema de bom desenvolvimento de códigos, é uma distribuição Linux e é um sistema fácil de trabalhar.
+
+3.Defina de qual forma você instalará o sistema operacional escolhido. Escreva o passo-a-passo da instalação e forneça os
+links necessários para isto.
+Instalarei através do cartão SD, primeiro é preciso formatar o cartão, depois é necessário baixar o instalador NOOBS no
+site https://www.raspberrypi.org/downloads, depois é necessário salvar o instalador no cartão SD, o cartão SD será colocado
+na Raspberry e quando ligada rodará o instalador para instalar o Raspbian.
+
+4.Defina de qual forma você desenvolverá software para o Raspberry Pi no projeto desta disciplina. Escreva o passo-a-passo
+ do desenvolvimento e forneça os links necessários para isto.
+Desenvolverei no próprio Raspberry Pi em linguagem C e compilarei através do terminal do Raspbian.
