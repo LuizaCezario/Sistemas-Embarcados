@@ -1,0 +1,47 @@
+1.Como se utiliza o comando ps para:
+(a) Mostrar todos os processos rodando na máquina?
+ps -e
+
+(b) Mostrar os processos de um usuário?
+ps -u nome_usuario
+
+(c) Ordenar todos os processos de acordo com o uso da CPU?
+ps -e --sort c
+
+(d) Mostrar a quanto tempo cada processo está rodando?
+ps -e --sort etimes
+
+2.De onde vem o nome fork()?
+Fork significa garfo em inglês. Faz analogia com o formato do garfo e suas bifurcações. 
+
+3.Quais são as vantagens e desvantagens em utilizar:
+
+(a) system()?
+Depois da execução do system o programa volta para sua execução normal, mas pode haver problemas de segurança.
+
+(b) fork() e exec()?
+É possível executar o processo pai paralelamente ao exec, os dois dividem o mesmo pc-counter e é mais utilizável que o
+system.
+
+4.É possível utilizar o exec() sem executar o fork() antes?
+Sim, mas o programa filho vai substituir o programa pai, sendo executado no lugar dele.
+
+5.Quais são as características básicas das seguintes funções:
+
+(a) execp()?
+Executa o programa que está na pasta do programa que está sendo executado.
+
+(b) execv()?
+Os argumentos do programa estão em um vetor NULL.
+
+(c) exece()?
+Aceita um argumento adcional indicando onde o programa será executado.
+
+(d) execvp()?
+É a união das funções execp e execv.
+
+(e) execve()?
+União das funções execv e exece.
+
+(f) execle()?
+União das funções exece e execl, a execl aceita argumentos var args.
