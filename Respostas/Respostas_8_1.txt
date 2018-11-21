@@ -1,0 +1,58 @@
+1.Quais são as vantagens e desvantagens em utilizar:
+(a) fork?
+Os processos rodam paralelamente com o mesmo pc counter, um naõ depende necessariamente do outro, a comunicação entre
+os processos é mais dificil e cada processo filho tem seu próprio espaço de memória.
+
+(b) threads?
+As variáveis podem ser compartilhadas, pode haver falha no tratamento de alguma variável caso seja compartilhada por duas
+threads rodando simultaneamente, se a função principal se interromper as threads também serão interrompidas, as threads 
+compartilham o mesmo endereço de memória.
+
+2.Quantas threads serão criadas após as linhas de código a seguir? Quantas coexistirão? Por quê?
+(a)
+
+void* funcao_thread_1(void *arg);
+void* funcao_thread_2(void *arg);
+
+int main (int argc, char** argv)
+{
+	pthread_t t1, t2;
+	pthread_create(&t1, NULL, funcao_thread_1, NULL);
+	pthread_create(&t2, NULL, funcao_thread_2, NULL);
+	pthread_join(t1, NULL);
+	pthread_join(t2, NULL);
+	return 0;
+}
+
+	Serão criadas duas threads e elas coexistirão porque o pthread_join das duas é somente ao final do programa.
+
+(b)
+
+void* funcao_thread_1(void *arg);
+void* funcao_thread_2(void *arg);
+
+int main (int argc, char** argv)
+{
+	pthread_t t1, t2;
+	pthread_create(&t1, NULL, funcao_thread_1, NULL);
+	pthread_join(t1, NULL);
+	pthread_create(&t2, NULL, funcao_thread_2, NULL);
+	pthread_join(t2, NULL);
+	return 0;
+}
+
+	Serão criadas duas threads, mas elas não coexistirão porque a thread 2 só é criada após a finalização da primeira
+thread.
+
+3.Apresente as características e utilidades das seguintes funções:
+
+(a) pthread_setcancelstate()
+Pode ser cancelada ou não dependendo do argumento: caso o argumento seja: PTHREAD_CANCEL_ENABLE é definido que a thread 
+pode ser cancelada (default),caso seja: PTHREAD_CANCEL_DISABLE a thread não pode ser cancelada.
+
+(b) pthread_setcanceltype()
+Pode determinar o modo de cancelamento da thread: caso o argumento seja: PTHREAD_CANCEL_DEFERRED é necessária uma função de
+cancelamento para que a thread seja cancelada (default), caso seja: PTHREAD_CANCEL_ASYNCHRONOUS a thread pode ser cancelada 
+a qualquer momento.
+
+(DICA: elas são relacionadas à função pthread_cancel().)
