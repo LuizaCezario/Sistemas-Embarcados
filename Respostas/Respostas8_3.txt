@@ -1,0 +1,25 @@
+1.Apresente as características e utilidades das seguintes funções:
+(a) popen()
+FILE *popen(const char *command, const char *type);
+
+Cria um processo através de um pipe, a função também faz um fork e chama o shell, pode-se definir também através do 
+argumento type se o processo será de leitura ou escrita.
+
+(b) pclose()
+
+int pclose(FILE *stream);
+Fecha o processo associado.
+
+(c) fileno()
+
+int fileno(FILE *stream);
+Examina o argumento stream e retorna o descritor de arquivo.
+
+2.Quais são as vantagens e desvantagens em utilizar:
+(a) popen()?
+Executa as funções simultaneamente, a comunicação é mais fácil e é possível escrerver diretamente na entrada do programa.
+Não tem o processo copiado, apenas executa o programa.
+
+(b) exec()?
+É possível realizar tarefas depois da criação do fork e antes de utilizar exec, exec executa apenas o argumento e a 
+comunicação é mais dificil.
