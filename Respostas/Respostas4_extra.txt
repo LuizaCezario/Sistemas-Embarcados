@@ -1,0 +1,68 @@
+
+
+    1.Crie um código em C que escreve a sequência de Fibonacci em arquivo em formato binário. Comece a sequência com os valores 0 e 1, e grave suas primeiras 100 posições em arquivo.
+
+#include <stdio.h>
+#include <stdlib.h>
+int main(int argc, const char * argv[]) {
+FILE *fp;
+
+fp = fopen("fibonacci.bin","w");
+if(!fp)
+{
+/* Arquivo ASCII, para escrita */
+printf( "Erro na abertura do arquivo");
+exit(0); }
+
+int fibonacci[100];
+int i;
+
+fibonacci[0] = 0;
+fibonacci[1] = 1;
+
+for(i=2; i<100; i++)
+{
+   fibonacci[i] = fibonacci[i-1] + fibonacci[i-2];
+}
+
+for(i=0; i < 100; i++)
+{
+ fprintf(fp, "%d\n", fibonacci[i]);
+}
+
+
+fclose(fp);
+return 0;
+}
+
+    2.Crie um código em C que lê o arquivo da questão anterior e escreve os valores lidos da sequência de Fibonacci na tela.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+int main(int argc, const char * argv[])
+{
+
+	FILE *fp;
+	fp = fopen("fibonacci.bin", "r");
+             if(!fp)
+            {
+            printf( "Erro na abertura do arquivo");
+            exit(0); }
+
+
+            char caractere;
+
+            while((cara = getc(fp)) != -1)
+            {
+                printf("%c", caractere);
+            }
+
+            fclose(fp);
+
+return 0;
+}
+
+
