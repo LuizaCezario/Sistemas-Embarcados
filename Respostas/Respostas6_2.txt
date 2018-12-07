@@ -1,0 +1,235 @@
+
+
+    1.Crie um código em C para gerar três processos-filho usando o fork().
+
+	#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main(void)
+{
+	pid_t = child_pid[3];
+        int i = 0;
+	printf("Processo pai com PID - %d\n", getpid());
+	printf("Novo filho\n");
+
+	for(i=0; i<3; i++)
+	{
+	  child_pid[i] = fork();
+	  if(child_pid[i] != 0)
+	  {
+           printf("Processo pai com PID - %d\n", getpid());
+	   printf("Processo filho com PID - %d\n", (int) child_pid);
+          }
+	  else
+ 	  {
+	    printf("Processo filho com PID - %d\n", getpid());
+          }
+	}
+
+	return 0;
+}
+
+    2.Crie um código em C que recebe o nome de diversos comandos pelos argumentos de entrada (argc e *argv[]), e executa cada um sequencialmente usando system(). Por exemplo, considerando que o código criado recebeu o nome de 'serial_system', e que ele foi executado na pasta '/Sistemas_Embarcados/Code/06_Processos', que contem diversos arquivos:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <string.h>
+int main(int argc, const char * argv[]) {
+int n;
+	for(n = 1; n < argc; n ++)
+	{
+		system(argv[n]);
+	}
+}
+
+luiza7@luiza7-Inspiron-5448:~$ gcc serial_system.c -o serial_system
+luiza7@luiza7-Inspiron-5448:~$ ./serial_system pwd echo ls echo cal
+/home/luiza7
+
+'Área de Trabalho'				  Ola_mundo.txt
+ build-qrcode-Desktop_Qt_5_12_0_GCC_64bit-Debug   Público
+ build-Teste-Desktop_Qt_5_12_0_GCC_64bit-Debug	  PycharmProjects
+ chamar						  qrcode
+ chamar.c					  Qt
+ criar_filho.c					  Respostas10_1.txt
+ Documentos					  Respostas2_1.txt
+ Downloads					  Respostas3.txt
+ Embarcados					  Respostas4_extra.txt
+ examples.desktop				  Respostas5_2.txt
+ Imagens					  Respotas4.txt
+ Interface					  rodar.c
+ ler_arq					  serial_system
+ Modelos					  serial_system.c
+ Música						  Tam_arquivo
+ ok						  Teste
+ ok.c						  Teste2.zip
+ Olamundo_posix					  Teste.zip
+ Olamundo_posix.c				  Vídeos
+ ola_mundo.txt
+
+   Dezembro 2018      
+do se te qu qu se sá  
+                   1  
+ 2  3  4  5  6  7  8  
+ 9 10 11 12 13 14 15  
+16 17 18 19 20 21 22  
+23 24 25 26 27 28 29  
+30 31        
+
+    3.Crie um código em C que recebe o nome de diversos comandos pelos argumentos de entrada (argc e *argv[]), e executa cada um usando fork() e exec().
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main( int argc, char *argv[]){
+
+	int ret;
+
+	for (int i = 1; i < argc; ++i)
+	{
+		if(fork() == 0){	// processo filho
+ 			execvp(argv[i], argv[i+1]);
+ 			return 0;
+		}		
+	}
+
+	return 0;
+}
+
+    4.Crie um código em C que gera três processos-filho usando o fork(), e que cada processo-filho chama a seguinte função uma vez:
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+
+void Incrementa_Variavel_Global(pid_t id_atual)
+{
+	v_global++;
+	printf("ID do processo que executou esta funcao = %d\n", id_atual);
+	printf("v_global = %d\n", v_global);
+}
+
+int main(void)
+{
+	int child_pid1, child_pid2, child_pid3;
+        int i = 0;
+	printf("Processo pai com PID - %d\n", getpid());
+        int v_global = 0; // Variavel global para este exemplo
+
+	
+	  child_pid1 = fork();
+	  if(child_pid1 == 0)
+	  {
+		Incrementa_Variavel_Global(getpid());
+          }
+	  else
+	  {
+	  child_pid2 = fork();
+	  if(child_pid2 == 0)
+	  {
+		Incrementa_Variavel_Global(getpid());
+          }
+	  else
+	  {
+	  child_pid3 = fork();
+	  if(child_pid3 == 0)
+	  {
+		Incrementa_Variavel_Global(getpid());
+          }
+	  else
+          {
+            //Incrementa_Variavel_Global(getpid());
+	  }
+	  }
+	  }
+	}
+
+	return 0;
+}
+
+luiza7@luiza7-Inspiron-5448:~$ gcc chamar_incrementa.c -o chamar_incrementa
+luiza7@luiza7-Inspiron-5448:~$ ./chamar_incrementa
+Processo pai com PID - 7684
+ID do processo que executou esta funcao = 7685
+v_global = 1
+ID do processo que executou esta funcao = 7686
+v_global = 1
+ID do processo que executou esta funcao = 7687
+v_global = 1
+
+
+(Repare que a função Incrementa_Variavel_Global() recebe como entrada o ID do processo que a chamou.) Responda: a variável global v_global foi compartilhada por todos os processos-filho, ou cada processo enxergou um valor diferente para esta variável?
+Cada um enxergou a mesma variável.
+
+    5.Repita a questão anterior, mas desta vez faça com que o processo-pai também chame a função Incrementa_Variavel_Global(). Responda: a variável global v_global foi compartilhada por todos os processos-filho e o processo-pai, ou cada processo enxergou um valor diferente para esta variável?
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/signal.h>
+#include <errno.h>
+
+int v_global = 0;
+void Incrementa_Variavel_Global(pid_t id_atual)
+{
+	v_global++;
+	printf("ID do processo que executou esta funcao = %d\n", id_atual);
+	printf("v_global = %d\n", v_global);
+}
+
+int main(void)
+{
+	int child_pid1, child_pid2, child_pid3;
+        int i = 0;
+	printf("Processo pai com PID - %d\n", getpid());
+        int v_global = 0; // Variavel global para este exemplo
+
+	
+	  child_pid1 = fork();
+	  if(child_pid1 == 0)
+	  {
+		Incrementa_Variavel_Global(getpid());
+          }
+	  else
+	  {
+	  child_pid2 = fork();
+	  if(child_pid2 == 0)
+	  {
+		Incrementa_Variavel_Global(getpid());
+          }
+	  else
+	  {
+	  child_pid3 = fork();
+	  if(child_pid3 == 0)
+	  {
+		Incrementa_Variavel_Global(getpid());
+          }
+	  else
+          {
+            Incrementa_Variavel_Global(getpid());
+	  }
+	  }
+	  }
+	
+
+	return 0;
+}
+
+luiza7@luiza7-Inspiron-5448:~$ gcc chamar_incrementa.c -o chamar_incrementa
+luiza7@luiza7-Inspiron-5448:~$ ./chamar_incrementa
+Processo pai com PID - 7684
+ID do processo que executou esta funcao = 7685
+v_global = 1
+ID do processo que executou esta funcao = 7686
+v_global = 1
+ID do processo que executou esta funcao = 7687
+v_global = 1
+
+
+
