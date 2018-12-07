@@ -1,0 +1,42 @@
+
+
+    1.Especifique algumas portas importantes pré-definidas para o protocolo TCP/IP.
+    Algumas portas importantes pré-definidas são as portas 20, 21, 22, 23, 80 e 8080. Elas são usadas respectivamente pelo FTP, pelo SSH, pela TELNET, pelo HTTP e pelo HTTPS.	
+
+    2.Com relação a endereços IP, responda:
+
+(a) Qual é a diferença entre endereços IP externos e locais?
+    Os locais são usados somente na rede local e são controlados pelo roteador, já os externos
+são usados na internet e são controlados pelo servidor.
+
+(b) Como endereços IP externos são definidos? Quem os define?
+    O roteador define através de uma técnica chamada NAT, ao mandar pacotes para internet o roteador troca o IP interno pelo externo para que outros computadores possam mandar respostas de volta para o computador, na volta ele desfaz a troca.
+
+(c) Como endereços IP locais são definidos? Quem os define?
+    São definidos pelo administrador da rede interna e podem ser atribuidos via DHCP.
+
+(d) O que é o DNS? Para que ele serve?
+    O Domain Name System é um sistema que gerencia nome de computadores, serviços e máquinas conectadas à internet. Ele serve para que se posaa ter acesso à um domínio de forma mais fácil
+através de um nome para que não seja necessário saber o endereço de IP do domínio.
+
+    3.Com relação à pilha de protocolos TCP/IP, responda:
+
+(a) O que são suas camadas? Para que servem?
+    São etapas para a transmissão de dados. Servem para normatizar e descrever as conexões e comunicações na internet. 
+
+(b) Quais são as camadas existentes? Para que servem?
+Existem 4 camadas: A de transporte, a de redes, a de aplicação e a de enlace. A de aplicação empacota os dados, a de transporte executa os protocolos tcp e udp  e indica os endereços de origem e destino, a de redes gerencia os pacotes, filas e utiliza algoritmos para determinar o caminho de menor custo entre a origem e o destino.
+
+(c) Quais camadas são utilizadas pela biblioteca de sockets?
+    São usadas as camadas de aplicação e transporte.
+
+(d) As portas usadas por servidores na função bind() se referem a qual camada?
+    Camada de redes.
+
+(e) Os endereços usados por clientes na função connect() se referem a qual camada?
+    Camada de redes.
+
+    4.Qual é a diferença entre os métodos GET e POST no protocolo HTTP?
+      O método GET faz requisição de uma página HTTP para um endereço e o método POST envia uma página HTTP para um endereço.
+
+
