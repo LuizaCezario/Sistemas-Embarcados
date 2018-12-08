@@ -1,0 +1,245 @@
+
+
+    1.Crie um programa em C que cria uma thread, e faça com que o programa principal envie os valores 1, 2, 3, 4, 5, 6, 7, 8, 9 e 10 para a thread, com intervalos de 1 segundo entre cada envio. Depois de o programa principal enviar o número 10, ele aguarda 1 segundo e termina a execução. A thread escreve na tela cada valor recebido, e quando ela receber o valor 10, ela termina a execução.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int i=0;
+
+void* funcao_exercicio(void*arg){
+	int a;
+
+	do{
+		a = i;
+
+		printf("%d\n", i);
+
+		sleep(1);
+		
+	}while(i <= 10);
+}
+
+
+int main(int argc, char const *argv[]){
+	
+	pthread_t thread_id;
+	pthread_create(&thread_id,NULL,&funcao_exercicio,NULL);
+
+	for (i = 1; i <= 10; ++i){
+		sleep(1);
+	}
+
+	pthread_join(thread_id,NULL);
+
+	return 0;
+}
+
+    2.Crie um programa em C que preenche o vetor long int v[50000] completamente com valores aleatórios (use a função random()), e que procura o valor máximo do vetor por dois métodos:
+
+(a) Pela busca completa no vetor v[];
+
+(b) Separando o vetor em 4 partes, e usando 4 threads para cada uma encontrar o máximo de cada parte. Ao final das threads, o programa principal compara o resultado das quatro threads para definir o máximo do vetor.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+
+int max_thread=0;
+int i = 0;
+
+void* funcao1(void* v){
+	
+long int *vetor = (long int *)v;
+
+	for(i=0; i < 12500; i++)
+	{
+	  if(vetor[i] > max_thread)
+	  {
+		max_thread = vetor[i];
+          }
+	}
+}
+void* funcao2(void* v){
+	
+long int *vetor = (long int *)v;
+
+	for(i=12500; i < 25000; i++)
+	{
+	  if(vetor[i] > max_thread)
+	  {
+		max_thread = vetor[i];
+          }
+	}
+}
+void* funcao3(void* v){
+ 
+long int *vetor = (long int *)v;
+
+	
+	for(i=25000; i < 37500; i++)
+	{
+	  if(vetor[i] > max_thread)
+	  {
+		max_thread = vetor[i];
+          }
+	}
+}
+void* funcao4(void* v){
+	
+long int *vetor = (long int *)v;
+
+	for(i=3750; i < 5000; i++)
+	{
+	  if(vetor[i] > max_thread)
+	  {
+		max_thread = vetor[i];
+          }
+	}
+}
+
+int main(int argc, char const *argv[]){
+	
+	pthread_t thread_1, thread_2, thread_3, thread_4;
+	long int v[50000];
+
+	for (i = 0; i < 50000; ++i){
+		v[i] = random();
+	}
+
+	pthread_create(&thread_1,NULL,&funcao1,&v);
+	pthread_create(&thread_2,NULL,&funcao2,&v);
+        pthread_create(&thread_3,NULL,&funcao3,&v);
+	pthread_create(&thread_4,NULL,&funcao4,&v);
+	pthread_join(thread_1,NULL);
+	pthread_join(thread_2,NULL);
+	pthread_join(thread_3,NULL);
+	pthread_join(thread_4,NULL);
+
+	int max = 0;
+
+	for(i=0; i < 50000; i++)
+	{
+	  if(v[i] > max)
+	  {
+		max = v[i];
+          }
+	}
+
+	printf("Valor thread: %d\n", max_thread);
+	printf("Valor método: %d\n", max);
+
+	return 0;
+}
+
+luiza7@luiza7-Inspiron-5448:~$ gcc thread2.c -o thread2 -lpthread
+luiza7@luiza7-Inspiron-5448:~$ ./thread2
+Valor thread: 2147469841
+Valor método: 2147469841
+
+Ao final do programa principal, compare os resultados obtidos pelos dois métodos.
+
+Os dois métodos obtiveram o mesmo resultado.
+
+    3.Repita o exercício anterior, mas calcule a média do vetor ao invés do valor máximo.
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+
+long int max_thread1 = 0, max_thread2 = 0, max_thread3 = 0, max_thread4=0, media1 =0, media2 =0, media3=0, media4=0;
+int i = 0;
+
+void* funcao1(void* v){
+	
+long int *vetor = (long int *)v;
+
+	for(i=0; i < 12500; i++)
+	{
+		max_thread1 = max_thread1 + vetor[i];
+	}
+	media1 = max_thread1/12500;
+}
+void* funcao2(void* v){
+	
+long int *vetor = (long int *)v;
+
+	for(i=12500; i < 25000; i++)
+	{
+	 
+		max_thread2 = max_thread2 + vetor[i];
+          
+	}
+	media2 = max_thread2/12500;
+}
+void* funcao3(void* v){
+ 
+long int *vetor = (long int *)v;
+
+	
+	for(i=25000; i < 37500; i++)
+	{
+	  
+		max_thread3 = max_thread3 + vetor[i];
+          
+	}
+	media3 = max_thread3/12500;
+}
+void* funcao4(void* v){
+	
+long int *vetor = (long int *)v;
+
+	for(i=3750; i < 5000; i++)
+	{
+		max_thread4 = max_thread4 + vetor[i];
+	}
+
+	media4 = max_thread4/12500;
+}
+
+int main(int argc, char const *argv[]){
+	
+	pthread_t thread_1, thread_2, thread_3, thread_4;
+	long int v[50000];
+
+	for (i = 0; i < 50000; ++i){
+		v[i] = random();
+	}
+
+	pthread_create(&thread_1,NULL,&funcao1,&v);
+	pthread_create(&thread_2,NULL,&funcao2,&v);
+        pthread_create(&thread_3,NULL,&funcao3,&v);
+	pthread_create(&thread_4,NULL,&funcao4,&v);
+	pthread_join(thread_1,NULL);
+	pthread_join(thread_2,NULL);
+	pthread_join(thread_3,NULL);
+	pthread_join(thread_4,NULL);
+
+	long int media = 0;
+        long int media_thread = 0;
+
+	for(i=0; i < 50000; i++)
+	{
+	  
+		media = media + v[i];
+	}
+
+	media_thread = (max_thread1 + max_thread2 + max_thread3 + max_thread4);
+
+	printf("Valor thread: %ld\n", media_thread/4);
+	printf("Valor método: %ld\n", media/50000);
+
+	return 0;
+}
+
+    4.Repita o exercício anterior, mas calcule a variância do vetor ao invés da média.
+
+
