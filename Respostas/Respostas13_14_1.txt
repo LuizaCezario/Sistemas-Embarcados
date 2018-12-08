@@ -1,0 +1,34 @@
+1.Cite as vantagens e desvantagens das comunicação serial:
+
+(a) Assíncrona (UART).
+Vantagens: A comunicação via UART necessita de menos pinos, é de fácil de implementação, só é necessário combinar a velocidade
+de transmissão dos dados sem necessidade de enviar um sinal de clock. Há também a possibilidade de enviar um bit de paridade
+para verificar os dados. Desvantagens: Em frequências mais altas pode haver atraso entre as taxas de transmissão e recepção
+fazendo com que a comunicação seja falha e em comparação com as outras ela é mais lenta.
+
+(b) SPI.
+Vantagens: É mais rápida que a UART e a comunicação tem chaces menores de falhar devido ao envio do clock. Desvantagem: É
+mais complexa de implementar, pode chegar a usar 4 pinos, não tem possibilidade de verificar a paridade.
+
+2.Considere o caso em que a Raspberry Pi deve receber leituras analógico/digitais de um MSP430, e que a comunicação entre
+os dois é UART. É tecnicamente possível que o MSP430 mande os resultados da conversão A/D a qualquer hora, ou ele deve 
+aguardar a Raspberry Pi fazer um pedido ao MSP430? Por quê?
+Sim, pode mandar a qualquer hora porque a UART tem um barramento de dados para a recepção e um para a transmissão de dados,
+assim ela pode transmitir e enviar dados ao mesmo tempo.
+
+3.Considere o caso em que a Raspberry Pi deve receber leituras analógico/digitais de um MSP430, que a comunicação entre os 
+dois seja SPI, e que o MSP430 seja o escravo. É tecnicamente possível que o MSP430 mande os resultados da conversão A/D a 
+qualquer hora, ou ele deve aguardar a Raspberry Pi fazer um pedido ao MSP430? Por quê?
+Deve esperar o pedido do Raspberry Pi, pois a transmissão só pode ser feita depois do Raspberry Pi enviar o sinal de clock
+para o MSP430.
+
+4.Se o Raspberry Pi tiver de se comunicar com dois dispositivos via UART, como executar a comunicação com o segundo 
+dispositivo?
+É necessário que o Raspberry Pi envie o endereço do dispositivo com o qual ele deseja se comunicar antes de fazer a
+transmissão ou recepção dos dados.
+
+5.Se o Raspberry Pi tiver de se comunicar com dois dispositivos via SPI, como executar a comunicação com o segundo 
+dispositivo?
+Pode ser feita de duas formas, a primeira é destinando um pino SS para um escravo e outro pino SS para o outro escravo
+ai ao fazer a comunicação seta o pino do escravo desejado, a segunda forma é cascateando os dispositivos e os dados vão 
+fluindo entre os registradores de deslocamento.
